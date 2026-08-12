@@ -62,7 +62,8 @@ function validarCedula(ci) {
     const apellidosInput = document.getElementById('apellido').value.trim();
     const cedulaInput = document.getElementById('ci').value.trim();
     const emailInput = document.getElementById('email').value.trim();
-    const res = document.getElementById('resultado-cedula');
+
+    const res = document.getElementById('mensaje-validacion');
 
     // Validación de nombres (mínimo 2 palabras)
     if (!tieneDosPalabras(nombresInput)) {
@@ -92,7 +93,8 @@ function validarCedula(ci) {
         return;
     }
 
-    // Si todo es válido, creamos la instancia del objeto Donante
+    // Si todo es válido, creamos la instancia del objeto Donante 
+    // NOTA: Aun agrego el teléfono
     const nuevoDonante = new Donante(
         nombresInput,
         apellidosInput,

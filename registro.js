@@ -1,3 +1,6 @@
+//Arreglo para guardar los donantes, recuperando lo que ya había antes
+let donantes = JSON.parse(localStorage.getItem('donantes')) || [];
+
 class Donante {
     constructor(nombres, apellidos, ci, email, telefono) {
         this.nombres = nombres;
@@ -107,6 +110,12 @@ function validarCedula(ci) {
         res.style.color = "red";
         return;
     }
+    //Validación de cédula duplicada
+    if (donantes.some(d => d.cedula === cedulaInput)) {
+        res.textContent = "Esta cédula ya está registrada.";
+        res.style.color = "red";
+        return;
+    }
 
     // Si todo es válido, creamos la instancia del objeto Donante 
     const nuevoDonante = new Donante(
@@ -116,6 +125,16 @@ function validarCedula(ci) {
         emailInput,
         telefonoInput
     );
+    // Guardamos el nuevo donante en el arreglo y en localStorage
+    donantes.push(nuevoDonante);
+    localStorage.setItem('donantes', JSON.stringify(donantes));
+
+    res.textContent = "¡Registro exitoso! Todos los datos son válidos.";
+    res.style.color = "green";
+    console.log("Objeto Donante Creado:", nuevoDonante);
+        
+    //Limpiamos el formulario después de un registro exitoso
+    document.getElementById('formregistro').reset();
 
     res.textContent = "¡Registro exitoso! Todos los datos son válidos.";
     res.style.color = "green";

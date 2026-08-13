@@ -53,6 +53,13 @@ function validarCedula(ci) {
      return digitoCalculado === verificador;
     }
 
+    // Función del # de teléfono
+    function validarTelefono(telefono) {
+        const regex = /^\d{10}$/; 
+        return regex.test(telefono);
+    }
+
+
    // Control de la interfaz (DOM)
     document.getElementById('formregistro').addEventListener('submit', function(event) {
     event.preventDefault(); 
@@ -62,6 +69,7 @@ function validarCedula(ci) {
     const apellidosInput = document.getElementById('apellido').value.trim();
     const cedulaInput = document.getElementById('ci').value.trim();
     const emailInput = document.getElementById('email').value.trim();
+    const telefonoInput = document.getElementById('telefono').value.trim();
 
     const res = document.getElementById('mensaje-validacion');
 
@@ -93,14 +101,20 @@ function validarCedula(ci) {
         return;
     }
 
+    // Validación de # de telefono
+    if (!validarTelefono(telefonoInput)) {
+        res.textContent = "Por favor, ingresa un número de teléfono válido (10 dígitos).";
+        res.style.color = "red";
+        return;
+    }
+
     // Si todo es válido, creamos la instancia del objeto Donante 
-    // NOTA: Aun agrego el teléfono
     const nuevoDonante = new Donante(
         nombresInput,
         apellidosInput,
         cedulaInput,
         emailInput,
-        document.getElementById('telefono').value.trim(),
+        telefonoInput
     );
 
     res.textContent = "¡Registro exitoso! Todos los datos son válidos.";

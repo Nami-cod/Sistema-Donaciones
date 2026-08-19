@@ -1,21 +1,22 @@
 :root {
-    --primary: #4f46e5;
-    --primary-dark: #4338ca;
+    --primary: black;
     --dark: #2c2c2c;
     --border: #d8dde3;
-    --bg: #f3f4f9;
-    --accent: #f59e0b;
+    --bg: #f4f6f8;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-    background: linear-gradient(135deg, #eef2ff 0%, #fdf4ff 100%);
+    background-color: var(--bg);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    font-family: 'Segoe UI', sans-serif;
 }
 
 h1 {
@@ -41,18 +42,12 @@ h1 {
 .form-group {
     background-color: white;
     padding: 18px 24px;
-    border-radius: 10px 30px;
-    border-left: 4px solid var(--primary);
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     width: 100%;
     max-width: 700px;
     display: flex;
     align-items: center;
-    transition: transform 0.15s ease;
-}
-
-.form-group:hover {
-    transform: translateX(3px);
 }
 
 .form-group label {
@@ -60,12 +55,13 @@ h1 {
     margin-bottom: 0;
     font-weight: 600;
     font-size: 13px;
-    color: var(--dark);
+    color: var(--primary);
     min-width: 140px;
     flex-shrink: 0;
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid var(--border);
@@ -73,12 +69,11 @@ input, select {
     font-size: 14px;
     outline: none;
     background-color: #fafbfc;
-    transition: border-color 0.15s ease;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     border-color: var(--primary);
-    background-color: white;
 }
 
 button {
@@ -91,11 +86,9 @@ button {
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: 0.2s;
 }
 
 button:hover {
-    background-color: var(--primary-dark);
+    background-color: var(--dark);
 }
-
-

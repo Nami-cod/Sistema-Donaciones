@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <!-- Chart.js para renderizar los gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Estadísticas y Reportes</title>
+    <style>
+        .stats-wrapper {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #0284c7;
+            font-weight: bold;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #0284c7;
+        }
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .stat-card p {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #222;
+        }
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .chart-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .tabla-resumen {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            background: #fff;
+        }
+        .tabla-resumen th, .tabla-resumen td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .tabla-resumen th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="stats-wrapper">
+        <div class="nav-links">
+            <a href="donacion.html">← Volver al Formulario de Donaciones</a>
+        </div>
+
+        <h1>Panel General de Estadísticas</h1>
+
+        <!-- Métricas Principales (Basadas en tu lógica Java) -->
+        <div class="cards-grid">
+            <div class="stat-card">
+                <h3>Total Recaudado</h3>
+                <p id="totalRecaudado">$0.00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Progreso General</h3>
+                <p id="progresoGeneral">0%</p>
+            </div>
+            <div class="stat-card">
+                <h3>Proyecto Más Apoyado</h3>
+                <p id="proyectoLider">-</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Donaciones</h3>
+                <p id="cantidadDonantes">0</p>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <h3>Recaudación vs Metas por Área</h3>
+                <canvas id="graficoBarras"></canvas>
+            </div>
+            <div class="chart-box">
+                <h3>Distribución por Método de Pago</h3>
+                <canvas id="graficoMetodos"></canvas>
+            </div>
+        </div>
+
+        <!-- Tabla detallada de fondos -->
+        <table class="tabla-resumen">
+            <thead>
+                <tr>
+                    <th>Área</th>
+                    <th>Recaudado ($)</th>
+                    <th>Meta ($)</th>
+                    <th>Progreso (%)</th>
+                </tr>
+            </thead>
+            <tbody id="tablaCuerpo">
+                <!-- Se llena dinámicamente con JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="estadistica.js"></script>
+</body>
+</html>

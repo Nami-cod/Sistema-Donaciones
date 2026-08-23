@@ -136,10 +136,13 @@ function validarCedula(ci) {
     //Limpiamos el formulario después de un registro exitoso
     document.getElementById('formregistro').reset();
 
-    res.textContent = "¡Registro exitoso! Todos los datos son válidos.";
-    res.style.color = "green";
+    // Tiempo de espera para que el usuario alcance a leer el mensaje,
+    // y luego se direcciona al formulario de donación.
+    //NOTA: 'setTimeout' es un método global de la API Web del navegador. 
+    setTimeout(() => {
+        window.location.href = "donacion.html";
+    }, 1500);
 
-    console.log("Objeto Donante Creado:", nuevoDonante);
 });
 
     

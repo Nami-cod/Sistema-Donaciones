@@ -1,0 +1,59 @@
+:root{
+  --tinta: rgb(22, 30, 32);
+  --tinta-clara: white;
+  --reflector: rgb(22, 30, 32);
+  --papel: #f7f4ee;
+  --teal: #3b6e71;
+  --border: #d8dde3;
+}
+
+*{ margin:0; padding:0; box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  font-family: 'Work Sans', sans-serif;
+  background: var(--papel);
+  color: var(--tinta);
+}
+
+/* NAVBAR (Menú de Navegación) — compartido por Inicio, Registro, Donación, Estadisticas */
+header{
+  position: fixed; top:0; left:0; width:100%;
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 20px 6%;
+  z-index: 50;
+  background: transparent;
+  transition: background .3s ease, box-shadow .3s ease;
+}
+
+/* Color inicial del texto y del logo */
+.logo{ 
+  font-family:'Fraunces', serif; 
+  font-weight:700; 
+  font-size:1.4rem; 
+  color: var(--tinta); 
+  letter-spacing:.5px; 
+}
+nav ul{ list-style:none; display:flex; gap:32px; }
+nav a{ 
+  color: var(--tinta); 
+  text-decoration:none; 
+  font-size:.95rem; 
+  font-weight:500; 
+  opacity:.9; 
+  transition: color .3s ease;
+}
+nav a:hover{ opacity:1; text-decoration:underline; }
+
+/* Estilos al hacer Scroll */
+header.scrolled{
+  background: var(--reflector);
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+header.scrolled .logo,
+header.scrolled nav a {
+  color: white;
+}
+
+@media (max-width: 640px){
+  nav ul{ display:none; }
+}

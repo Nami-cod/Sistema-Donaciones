@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="index.css">
+<title>Inicio — Plataforma de donación PUCE</title>
+
+</head>
+<body>
+
+<header id="navbar">
+  <div class="logo">PUCE</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="registro.html">Donar</a></li>
+      <li><a href="estadistica.html">Estadísticas</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <p class="eyebrow">Fondos para proyectos universitarios</p>
+    <h1 class="frase">Hay talento <em>invisible</em> esperando ser financiado</h1>
+    <p class="sub">Muchos proyectos universitarios con potencial real nunca encuentran fondos. Esta plataforma conecta a donantes con esas ideas, para que puedan desarrollarse.</p>
+    <a href="registro.html" class="cta">Empieza a donar</a>
+  </div>
+</section>
+
+<section class="categorias" id="proyectos">
+  <h2>Conoce más</h2>
+  <p>Cada categoría agrupa proyectos reales de estudiantes. Ejemplos de lo que estarías apoyando.</p>
+
+  <div class="cards" id="tarjetas">
+    <button class="card" data-categoria="audiovisual">
+      <div class="icono">A</div>
+      <h3>Audiovisual</h3>
+      <p>Cortometrajes y producciones estudiantiles sin distribución ni presupuesto.<br>
+       Aquí va la información del proyecto y lo que se requiere.</p>
+    </button>
+
+    <button class="card" data-categoria="artes">
+      <div class="icono">B</div>
+      <h3>Artes</h3>
+      <p>Exposiciones y obras que no encuentran espacio ni respaldo institucional.<br>
+       Aquí va la información del proyecto y lo que se requiere.</p>
+    </button>
+
+    <button class="card" data-categoria="investigacion">
+      <div class="icono">C</div>
+      <h3>Investigación</h3>
+      <p>Proyectos académicos con impacto real que quedan sin fondos por falta de visibilidad.<br>
+       Aquí va la información del proyecto y lo que se requiere.</p>
+    </button>
+  </div>
+</section>
+
+<div class="panel" id="panel">
+  <div class="panel-inner">
+    <span class="categoria-label" id="panel-label"></span>
+    <h4 id="panel-titulo"></h4>
+    <p id="panel-desc"></p>
+    <div class="proyectos-ejemplo" id="panel-proyectos"></div>
+  </div>
+</div>
+
+<script>
+  const header = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ---------- Contenido de cada categoría ----------
+  // En tu proyecto real, esto vendría de tu base de datos de proyectos
+  const contenido = {
+    audiovisual: {
+      titulo: "Audiovisual",
+      desc: "Estudiantes de cine y comunicación que necesitan equipo, edición o distribución para que su trabajo llegue a más personas.",
+      proyectos: [
+        { nombre: "Documental 'Raíces'", detalle: "Necesita fondos para posproducción" },
+        { nombre: "Cortometraje 'Andén 3'", detalle: "Busca cubrir alquiler de equipo" }
+      ]
+    },
+    artes: {
+      titulo: "Artes",
+      desc: "Estudiantes de artes plásticas y escénicas que necesitan materiales o espacio para exponer su trabajo.",
+      proyectos: [
+        { nombre: "Exposición 'Umbral'", detalle: "Necesita fondos para montaje" },
+        { nombre: "Instalación colectiva", detalle: "Busca materiales reciclados y transporte" }
+      ]
+    },
+    investigacion: {
+      titulo: "Investigación",
+      desc: "Proyectos académicos con potencial de impacto real que aún no logran financiamiento institucional.",
+      proyectos: [
+        { nombre: "Estudio sobre calidad del agua", detalle: "Necesita fondos para equipo de laboratorio" },
+        { nombre: "Prototipo de bajo costo", detalle: "Busca cubrir materiales de construcción" }
+      ]
+    }
+  };
+
+  const tarjetas = document.querySelectorAll('.card');
+  const panel = document.getElementById('panel');
+
+  tarjetas.forEach(tarjeta => {
+    tarjeta.addEventListener('click', () => {
+      const categoria = tarjeta.dataset.categoria;
+      const yaSeleccionada = tarjeta.classList.contains('seleccionada');
+
+      tarjetas.forEach(t => t.classList.remove('seleccionada'));
+
+      if (yaSeleccionada) {
+        panel.classList.remove('abierto');
+        return;
+      }
+
+      tarjeta.classList.add('seleccionada');
+      const data = contenido[categoria];
+
+      // Quita cualquier clase de categoría anterior y pone la nueva,
+      // así el panel nunca se queda con dos fondos superpuestos
+      const panelInner = document.querySelector('.panel-inner');
+      panelInner.classList.remove('audiovisual', 'artes', 'investigacion');
+      panelInner.classList.add(categoria);
+
+      document.getElementById('panel-label').textContent = 'Proyectos de ' + data.titulo;
+      document.getElementById('panel-titulo').textContent = data.titulo;
+      document.getElementById('panel-desc').textContent = data.desc;
+
+      const cont = document.getElementById('panel-proyectos');
+      cont.innerHTML = '';
+      data.proyectos.forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'proyecto-item';
+        item.innerHTML = `<strong>${p.nombre}</strong><span>${p.detalle}</span>`;
+        cont.appendChild(item);
+      });
+
+      panel.classList.add('abierto');
+
+      // Desplaza suavemente hacia el panel para que el usuario vea que se abrió
+      setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    });
+  });
+</script>
+
+</body>
+</html>

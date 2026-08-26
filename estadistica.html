@@ -3,78 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Conexión con fuentes de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="estadistica.css">
     <!-- Chart.js para renderizar los gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Estadísticas y Reportes</title>
-    <style>
-        .stats-wrapper {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-        }
-        .nav-links {
-            margin-bottom: 20px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #0284c7;
-            font-weight: bold;
-        }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .stat-card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-            border-top: 4px solid #0284c7;
-        }
-        .stat-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 0.9rem;
-            color: #666;
-            text-transform: uppercase;
-        }
-        .stat-card p {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #222;
-        }
-        .charts-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-        .chart-box {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .tabla-resumen {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-            background: #fff;
-        }
-        .tabla-resumen th, .tabla-resumen td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        .tabla-resumen th {
-            background-color: #f2f2f2;
-        }
-    </style>
+
 </head>
 <body>
     <header id="navbar">
@@ -141,6 +79,30 @@
             </tbody>
         </table>
     </div>
+
+    <footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <span class="footer-logo">PUCE</span>
+      <p>Sistema de Donaciones es un proyecto de los estudiantes de la Pontificia Universidad Católica del Ecuador — Todos los derechos están reservados.</p>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/pontificiauniversidadcatolicadelecuador" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.5l.4-3H13.5V8.2c0-.87.24-1.46 1.49-1.46H16V4.14C15.72 4.1 14.76 4 13.65 4c-2.31 0-3.9 1.41-3.9 4v2.5H7.3v3h2.45V21h3.75z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/puce_ecuador/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.16-.46-.35-1.26-.4-2.43C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.97.4-2.43A4.9 4.9 0 0 1 3.82 3a4.9 4.9 0 0 1 1.77-1.15c.46-.16 1.26-.35 2.43-.4C9.29 1.4 9.67 1.39 12 1.39zm0 1.8c-3.15 0-3.5.01-4.73.07-.96.04-1.48.2-1.83.34-.46.18-.79.4-1.14.75-.35.35-.57.68-.75 1.14-.14.35-.3.87-.34 1.83-.06 1.23-.07 1.58-.07 4.73s.01 3.5.07 4.73c.04.96.2 1.48.34 1.83.18.46.4.79.75 1.14.35.35.68.57 1.14.75.35.14.87.3 1.83.34 1.23.06 1.58.07 4.73.07s3.5-.01 4.73-.07c.96-.04 1.48-.2 1.83-.34.46-.18.79-.4 1.14-.75.35-.35.57-.68.75-1.14.14-.35.3-.87.34-1.83.06-1.23.07-1.58.07-4.73s-.01-3.5-.07-4.73c-.04-.96-.2-1.48-.34-1.83a3.1 3.1 0 0 0-.75-1.14 3.1 3.1 0 0 0-1.14-.75c-.35-.14-.87-.3-1.83-.34C15.5 4.01 15.15 4 12 4zm0 3.9a4.1 4.1 0 1 1 0 8.2 4.1 4.1 0 0 1 0-8.2zm0 1.8a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6zm5.22-2a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+      </a>
+      <a href="https://x.com/PUCE_Ecuador" class="social-icon" aria-label="Twitter / X" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M18.9 2.9h3.1l-6.8 7.7 8 10.5h-6.3l-4.9-6.4-5.6 6.4H3.3l7.2-8.2-7.7-10h6.4l4.4 5.8zm-1.1 16.3h1.7L7.3 4.7H5.5z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@puce_ecuador" class="social-icon" aria-label="TikTok" target="_blank" rel="noopener">
+       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-1.25V9.18a6.34 6.34 0 0 0-1.11-.1 6.34 6.34 0 1 0 6.34 6.34V9.07a8.16 8.16 0 0 0 4.88 1.62V7.24a4.85 4.85 0 0 1-2.1-.55z"/></svg>
+      </a>
+    </div>
+    <button class="footer-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">&uarr;</button>
+  </div>
+</footer>
 
     <script src="estadistica.js"></script>
 </body>

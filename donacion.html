@@ -10,6 +10,93 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="estilos.css">
     <title>Donaciones</title>
+
+    <!-- Estilos solo para los elementos nuevos de esta página -->
+    <style>
+        .botones-area, .botones-metodo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .btn-area, .btn-metodo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 18px;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            background: #fff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn-area:hover, .btn-metodo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        .btn-area.seleccionado, .btn-metodo.seleccionado {
+            border-color: #2e7d32;
+            background: #eaf7ea;
+            font-weight: 600;
+        }
+
+        .icono-metodo {
+            font-size: 1.8rem;
+        }
+
+        .barra-progreso {
+            width: 100%;
+            max-width: 400px;
+            height: 22px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .barra-relleno {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            color: white;
+            font-size: 0.8rem;
+            text-align: center;
+            line-height: 22px;
+            transition: width 0.4s ease;
+            white-space: nowrap;
+        }
+
+        #datosDonante {
+            font-weight: 500;
+        }
+
+        .excel-section {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .excel-section button, .btn-cargar {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            background: #1565c0;
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .excel-section button:hover, .btn-cargar:hover {
+            background: #0d47a1;
+        }
+    </style>
 </head>
 <body>
     <header id="navbar">
@@ -27,44 +114,49 @@
     <form id="formdonacion">
         <div class="form-grid">
 
+            <!-- Buscamos al donante por cédula para no pedirle sus datos otra vez -->
             <div class="form-group">
-                <label for="area">Selecciona el área a donar:</label><br>
-                <select id="area" name="area" required>
-                    <option value="">-- Selecciona una opción --</option>
-                    <option value="Audiovisual">1. Proyecto Audiovisual</option>
-                    <option value="Becas">2. Proyecto Becas</option>
-                    <option value="Artes">3. Proyecto Artes</option>
-                </select><br><br>
+                <label for="cedulaBusqueda">Cédula del donante:</label><br>
+                <input type="text" id="cedulaBusqueda" placeholder="1712345678" maxlength="10" required><br>
+                <p id="datosDonante"></p>
+                <!-- Guardamos aquí el nombre y correo encontrados, aunque no se vean -->
+                <input type="hidden" id="nombre">
+                <input type="hidden" id="correo">
             </div>
 
-            <!-- Aquí se muestra la listita según el área elegida -->
+            <!-- Área de donación, ahora como botones -->
             <div class="form-group">
+                <label>Selecciona el área a donar:</label><br>
+                <div class="botones-area" id="botonesArea">
+                    <button type="button" class="btn-area" data-area="Audiovisual">🎬<br>Audiovisual</button>
+                    <button type="button" class="btn-area" data-area="Investigacion">🔬<br>Investigación</button>
+                    <button type="button" class="btn-area" data-area="Artes">🎨<br>Artes</button>
+                </div>
                 <p id="detalleArea"></p>
+                <div class="barra-progreso">
+                    <div id="progresoRelleno" class="barra-relleno">0%</div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="nombre">Nombre del donante:</label><br>
-                <input type="text" id="nombre" name="nombre" required><br><br>
+                <label for="monto">Monto a donar (entre $5 y $250):</label><br>
+                <input type="number" id="monto" name="monto" min="5" max="250" step="0.01" required>
             </div>
 
+            <!-- Método de pago, ahora como botones con ícono -->
             <div class="form-group">
-                <label for="correo">Correo Electrónico:</label><br>
-                <input type="email" id="correo" name="correo" required placeholder="correo@ejemplo.com"><br><br>
-            </div>
-
-            <div class="form-group">
-                <label for="monto">Monto a donar ($):</label><br>
-                <input type="number" id="monto" name="monto" min="1" step="0.01" required><br><br>
-            </div>
-
-            <div class="form-group">
-                <label for="metodoPago">Método de pago:</label><br>
-                <select id="metodoPago" name="metodoPago" required>
-                    <option value="">-- Selecciona una opción --</option>
-                    <option value="Visa">1. Visa</option>
-                    <option value="Mastercard">2. Mastercard</option>
-                    <option value="Transferencia">3. Transferencia</option>
-                </select><br><br>
+                <label>Método de pago:</label><br>
+                <div class="botones-metodo" id="botonesMetodo">
+                    <button type="button" class="btn-metodo" data-metodo="Visa">
+                        <span class="icono-metodo">💳</span>Visa
+                    </button>
+                    <button type="button" class="btn-metodo" data-metodo="Mastercard">
+                        <span class="icono-metodo">💳</span>Mastercard
+                    </button>
+                    <button type="button" class="btn-metodo" data-metodo="Transferencia">
+                        <span class="icono-metodo">🏦</span>Transferencia
+                    </button>
+                </div>
             </div>
 
             <p id="mensaje-validacion"></p>
@@ -76,6 +168,15 @@
     <!-- Aquí aparece el comprobante después de donar -->
     <div id="comprobante"></div>
 
+    <!-- Botones para exportar/cargar el historial en Excel -->
+    <div class="excel-section">
+        <button type="button" id="btnExportarExcel">📥 Descargar historial en Excel</button>
+        <label for="inputExcel" class="btn-cargar">📤 Cargar Excel</label>
+        <input type="file" id="inputExcel" accept=".xlsx, .xls" style="display:none">
+    </div>
+
+    <!-- Librería para leer/escribir archivos Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="donacion.js"></script>
 </body>
 </html>

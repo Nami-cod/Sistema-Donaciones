@@ -47,6 +47,10 @@
       <h3>Audiovisual</h3>
       <p>Cortometrajes y producciones estudiantiles sin distribución ni presupuesto.<br>
        Aquí va la información del proyecto y lo que se requiere.</p>
+       <div class="progreso-mini">
+         <div class="progreso-mini-barra"><span id="barra-Audiovisual" style="width:0%"></span></div>
+         <p class="progreso-mini-texto" id="texto-Audiovisual"></p>
+       </div>
     </button>
 
     <button class="card" data-categoria="artes">
@@ -54,6 +58,10 @@
       <h3>Artes</h3>
       <p>Exposiciones y obras que no encuentran espacio ni respaldo institucional.<br>
        Aquí va la información del proyecto y lo que se requiere.</p>
+       <div class="progreso-mini">
+         <div class="progreso-mini-barra"><span id="barra-Artes" style="width:0%"></span></div>
+         <p class="progreso-mini-texto" id="texto-Artes"></p>
+       </div>
     </button>
 
     <button class="card" data-categoria="investigacion">
@@ -61,6 +69,10 @@
       <h3>Investigación</h3>
       <p>Proyectos académicos con impacto real que quedan sin fondos por falta de visibilidad.<br>
        Aquí va la información del proyecto y lo que se requiere.</p>
+       <div class="progreso-mini">
+         <div class="progreso-mini-barra"><span id="barra-Investigacion" style="width:0%"></span></div>
+         <p class="progreso-mini-texto" id="texto-Investigacion"></p>
+       </div>
     </button>
   </div>
 </section>
@@ -104,8 +116,31 @@
     header.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // ---------- Contenido de cada categoría ----------
-  // En tu proyecto real, esto vendría de tu base de datos de proyectos
+  const metasInicio = {
+    Audiovisual: 1000,
+    Investigacion: 1500,
+    Artes: 800
+  };
+  const fondosInicio = JSON.parse(localStorage.getItem('fondos')) || {
+    Audiovisual: 0,
+    Investigacion: 0,
+    Artes: 0
+  };
+
+  document.querySelectorAll('.card[data-categoria]').forEach(card => {
+    const categoria = card.dataset.categoria;
+    const area = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+    
+    const recaudado = fondosInicio[area] || 0;
+    const meta = metasInicio[area] || 0;
+    const porcentaje = meta > 0 ? Math.min((recaudado / meta) * 100, 100) : 0;
+
+    const barra = document.getElementById(`barra-${area}`);
+    const texto = document.getElementById(`texto-${area}`);
+    if (barra) barra.style.width = `${porcentaje}%`;
+    if (texto) texto.textContent = `$${recaudado.toFixed(0)} de $${meta.toFixed(0)} recaudados (${porcentaje.toFixed(0)}%)`;
+  });
+
   const contenido = {
     audiovisual: {
       titulo: "Audiovisual",

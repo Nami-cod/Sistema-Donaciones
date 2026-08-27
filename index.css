@@ -6,7 +6,7 @@
   padding: 100px 6% 60px;
   color: var(--papel);
 }
-.hero-video{ /* Ruta de video */
+.hero-video{ 
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -91,7 +91,26 @@
 .card.seleccionada .icono{ background: var(--reflector); }
 .card h3{ font-family:'Newsreader', serif; font-size:1.1rem; margin-bottom:6px; }
 .card p{ font-size:.87rem; opacity:.92; line-height:1.5; }
- 
+
+.card .progreso-mini{ position:relative; z-index:2; margin-top:16px; }
+.card .progreso-mini-barra{
+  width:100%; height:5px;
+  background: rgba(255,255,255,.25);
+  border-radius:999px;
+  overflow:hidden;
+}
+.card .progreso-mini-barra span{
+  display:block; height:100%;
+  background:#fff;
+  border-radius:999px;
+  transition: width .4s ease;
+}
+.card .progreso-mini-texto{
+  font-size:.72rem;
+  margin-top:6px;
+  opacity:.85;
+}
+
 /* PANEL DE INFORMACIÓN */
 .panel{
   max-width: 1000px; margin: 0 auto; padding: 0 6%;

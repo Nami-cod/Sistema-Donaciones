@@ -3,8 +3,8 @@ const EMAILJS_SERVICE_ID = "service_w6jqios";
 const EMAILJS_TEMPLATE_POSTULANTE = "template_i8keu9i";
 const EMAILJS_TEMPLATE_ADMIN = "template_iyrfg1q";
 
-// A qué correo les llega la copia interna a ustedes (el equipo/organización)
-const CORREO_ADMIN = "tuequipo@tudominio.com";
+// Correo donde llega la copia de la postulación para nuestro control interno. 
+const CORREO_ADMIN = "jahillandrade42@gmail.com";
 
 // Inicializamos EmailJS una sola vez, apenas carga la página. El "if" evita que el sitio se rompa.
 if (typeof emailjs !== "undefined") {

@@ -25,35 +25,52 @@ h1{
 .form-grid {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 15px;
+    gap: 18px;
+    margin-bottom: 20px;
 }
 
 .form-group {
     background-color: white;
-    padding: 18px 24px;
+    padding: 20px 24px;
     border-radius: 12px 34px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     width: 100%;
-    max-width: 700px;
+    max-width: 760px;
     display: flex;
     align-items: center;
+    gap: 18px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 0;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--tinta);
     min-width: 140px;
     flex-shrink: 0;
+}
+.form-group input,
+.form-group select {
+  flex-grow: 1;
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .form-group label {
+    min-width: auto;
+  }
 }
 
 input,
 select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 12px 14px;
     border: 1px solid var(--border);
     border-radius: 12px 12px;
     font-size: 14px;
@@ -84,4 +101,23 @@ button {
 button:hover {
     background-color: var(--tinta-clara);
   color: var(--tinta);
+}
+.form-actions{
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.btn-secundario{
+  background-color: transparent;
+  color: var(--reflector);
+  border: 1px solid var(--reflector);
+}
+.btn-secundario:hover{
+  background-color: var(--reflector);
+  color: var(--papel);
+}
+button:disabled{
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
 }

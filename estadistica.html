@@ -73,10 +73,23 @@
             <tbody id="tablaCuerpo"></tbody>
         </table>
 
-        <!-- Proyección a la próxima semana -->
+        <!-- Proyección interactiva por días -->
         <section class="proyeccion-section">
-            <h2>Proyección — Próxima semana</h2>
-            <p class="proyeccion-nota">Estimación basada en el promedio actual por donación, la distribución por área y un crecimiento moderado del 20&nbsp;% por difusión del sistema.</p>
+            <h2>Proyección a futuro</h2>
+            <p class="proyeccion-nota">Mueve la barra para elegir desde el día siguiente hasta un máximo de 10 días. La estimación usa el promedio actual por donación, la distribución por área y un crecimiento moderado del 20&nbsp;%.</p>
+
+            <div class="slider-box">
+                <div class="slider-header">
+                    <span>Horizonte de proyección</span>
+                    <strong id="labelDias">1 día</strong>
+                </div>
+                <input type="range" id="sliderDias" min="1" max="10" value="1" step="1">
+                <div class="slider-labels">
+                    <span>1 día</span>
+                    <span>5 días</span>
+                    <span>10 días</span>
+                </div>
+            </div>
 
             <div class="cards-grid">
                 <div class="stat-card proyeccion-card">
@@ -84,8 +97,8 @@
                     <p id="donacionesEstimadas">0</p>
                 </div>
                 <div class="stat-card proyeccion-card">
-                    <h3>Ingreso proyectado (semana)</h3>
-                    <p id="proyeccionSemana">$0.00</p>
+                    <h3>Ingreso proyectado</h3>
+                    <p id="proyeccionPeriodo">$0.00</p>
                 </div>
                 <div class="stat-card proyeccion-card">
                     <h3>Total acumulado proyectado</h3>
@@ -95,7 +108,7 @@
 
             <div class="charts-container">
                 <div class="chart-box">
-                    <h3>Actual vs. proyectado (+1 semana)</h3>
+                    <h3 id="tituloGraficoProyeccion">Actual vs. proyectado (+1 día)</h3>
                     <canvas id="graficoProyeccion"></canvas>
                 </div>
             </div>
@@ -105,7 +118,7 @@
                     <tr>
                         <th>Área</th>
                         <th>Actual ($)</th>
-                        <th>Proyección semana ($)</th>
+                        <th>Proyección ($)</th>
                         <th>Total proyectado ($)</th>
                     </tr>
                 </thead>

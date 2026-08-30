@@ -11,92 +11,73 @@
     <title>Donaciones</title>
 
     <style>
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
+       .form-group{
+        display: flex;
+        flex-direction: column;
+       }
 
-        .botones-area, .botones-metodo {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin: 10px 0;
-        }
+      .botones-area, .botones-metodo{
+       display: flex;
+       flex-wrap: wrap;
+       gap: 16px;
+       margin: 10px 0;
+       }
 
-        .btn-area, .btn-metodo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 160px;
-            height: 130px;
-            border: 2px solid #ccc;
-            border-radius: 14px;
-            background: #fff;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 1rem;
-            text-align: center;
-            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-        }
+      .btn-area, .btn-metodo{
+      color: var(--tinta);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 160px;
+      height: 130px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      text-align: center;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      }
 
-        .btn-area { font-size: 3rem; }
-        .btn-area span, .btn-metodo span { font-size: 1rem; font-weight: 500; }
-        .icono-metodo { font-size: 2.8rem; }
+     .btn-area{ font-size: 3rem; }
+     .btn-area span, .btn-metodo span{ font-size: 1rem; font-weight: 500; }
+     .icono-metodo{ font-size: 2.8rem; }
 
-        .btn-area:hover, .btn-metodo:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-        }
+     .btn-area:hover, .btn-metodo:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 6px 14px rgba(0,0,0,.15);
+     }
 
-        .btn-area.seleccionado, .btn-metodo.seleccionado {
-            border-color: #2e7d32;
-            background: #eaf7ea;
-            font-weight: 600;
-        }
+     .btn-area.seleccionado, .btn-metodo.seleccionado{
+      border-color: #2e7d32;
+      background: #eaf7ea;
+      font-weight: 600;
+     }
 
-        #datosDonante { font-weight: 500; }
+     #datosDonante{ font-weight: 500; }
 
-        /* Aviso cuando la cédula no está registrada */
-        #avisoRegistro {
-            border: 2px dashed #c62828;
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 10px;
-            color: #c62828;
-        }
+     #avisoRegistro{
+     border: 2px dashed #c62828;
+     border-radius: 10px;
+     padding: 14px;
+     margin-top: 10px;
+     color: #c62828;
+     }
 
-        #avisoRegistro a {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 8px 16px;
-            background: #c62828;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .excel-section {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .excel-section button, .btn-cargar {
-            padding: 10px 16px;
-            border-radius: 8px;
-            border: none;
-            background: #1565c0;
-            color: white;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .excel-section button:hover, .btn-cargar:hover { background: #0d47a1; }
-    </style>
+     #avisoRegistro a{
+     display: inline-block;
+     margin-top: 8px;
+     padding: 8px 16px;
+     background: #c62828;
+     color: white;
+     text-decoration: none;
+     border-radius: 8px;
+     font-weight: 600;
+     }
+</style>
 </head>
 <body>
     <header id="navbar">
@@ -105,6 +86,7 @@
         <ul>
           <li><a href="index.html">Inicio</a></li>
           <li><a href="registro.html">Donar</a></li>
+          <li><a href="propuesta.html">Postular</a></li>
           <li><a href="estadistica.html">Estadísticas</a></li>
         </ul>
       </nav>
@@ -163,7 +145,7 @@
                 </div>
 
                 <p id="mensaje-validacion"></p>
-                <button type="submit">Donar</button>
+                <button type="submit" id="btnDonar">Donar</button>
             </div>
 
         </div>
@@ -171,13 +153,14 @@
 
     <div id="comprobante"></div>
 
-    <div class="excel-section">
-        <button type="button" id="btnExportarExcel">📥 Descargar historial en Excel</button>
-        <label for="inputExcel" class="btn-cargar">📤 Cargar Excel</label>
+    <div class="form-actions">
+        <button type="button" id="btnExportarExcel" >Descargar historial en Excel</button>
+        <label for="inputExcel" class="btn-secundario">Cargar Excel</label>
         <input type="file" id="inputExcel" accept=".xlsx, .xls" style="display:none">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="donacion.js"></script>
 </body>
 </html>

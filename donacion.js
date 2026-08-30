@@ -1,3 +1,27 @@
+const EMAILJS_PUBLIC_KEY = "PrVZ3KmmwxE2OXjA6";
+const EMAILJS_SERVICE_ID = "service_c8fs6eo";
+const EMAILJS_TEMPLATE_DONACION = "template_2xqnzrr"; 
+
+if (typeof emailjs !== "undefined") {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
+// Envía el comprobante de la donación al correo del donante.
+function enviarCorreoComprobante(d) {
+  if (typeof emailjs === "undefined") {
+    return Promise.reject("EmailJS no está cargado.");
+  }
+  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_DONACION, {
+    to_name: d.nombre,
+    to_email: d.correo,
+    cedula: d.cedula,
+    area: d.area,
+    metodo: d.metodoPago,
+    monto: d.monto.toFixed(2),
+    fecha: new Date().toLocaleString("es-EC"),
+  });
+}
+
 let donaciones = JSON.parse(localStorage.getItem('donaciones')) || [];
 let donantes = JSON.parse(localStorage.getItem('donantes')) || [];
 
@@ -146,47 +170,63 @@ document.getElementById('formdonacion').addEventListener('submit', function (eve
         return;
     }
 
-    const nuevaDonacion = new Donacion(
-        donanteEncontrado.cedula,
-        donanteEncontrado.nombres + " " + donanteEncontrado.apellidos,
-        donanteEncontrado.email,
-        areaSeleccionada,
-        metodoSeleccionado,
-        montoInput
-    );
+    const btnDonar = document.getElementById('btnDonar');
+    btnDonar.disabled = true;
+    const textoOriginalBoton = btnDonar.textContent;
+    btnDonar.textContent = "Procesando pago...";
+    res.textContent = "";
 
-    donaciones.push(nuevaDonacion);
-    localStorage.setItem('donaciones', JSON.stringify(donaciones));
+    setTimeout(() => {
+        const nuevaDonacion = new Donacion(
+            donanteEncontrado.cedula,
+            donanteEncontrado.nombres + " " + donanteEncontrado.apellidos,
+            donanteEncontrado.email,
+            areaSeleccionada,
+            metodoSeleccionado,
+            montoInput
+        );
 
-    fondos[areaSeleccionada] += montoInput;
-    localStorage.setItem('fondos', JSON.stringify(fondos));
+        donaciones.push(nuevaDonacion);
+        localStorage.setItem('donaciones', JSON.stringify(donaciones));
 
-    const comprobante = document.getElementById('comprobante');
-    comprobante.innerHTML = `
-        <h3>COMPROBANTE</h3>
-        <p>Donante: ${nuevaDonacion.nombre}</p>
-        <p>Cédula: ${nuevaDonacion.cedula}</p>
-        <p>Correo: ${nuevaDonacion.correo}</p>
-        <p>Área: ${nuevaDonacion.area}</p>
-        <p>Método: ${nuevaDonacion.metodoPago}</p>
-        <p>Monto: $${nuevaDonacion.monto.toFixed(2)}</p>
-    `;
+        fondos[areaSeleccionada] += montoInput;
+        localStorage.setItem('fondos', JSON.stringify(fondos));
 
-    res.textContent = "¡Donación registrada con éxito!";
-    res.style.color = "green";
-    reproducirSonidoExito();
-    console.log("Objeto Donacion Creado:", nuevaDonacion);
+        const comprobante = document.getElementById('comprobante');
+        comprobante.innerHTML = `
+            <h3>COMPROBANTE</h3>
+            <p>Donante: ${nuevaDonacion.nombre}</p>
+            <p>Cédula: ${nuevaDonacion.cedula}</p>
+            <p>Correo: ${nuevaDonacion.correo}</p>
+            <p>Área: ${nuevaDonacion.area}</p>
+            <p>Método: ${nuevaDonacion.metodoPago}</p>
+            <p>Monto: $${nuevaDonacion.monto.toFixed(2)}</p>
+        `;
 
-    document.getElementById('formdonacion').reset();
-    detalleTexto.textContent = "";
-    datosDonante.textContent = "";
-    avisoRegistro.style.display = "none";
-    panelDonacion.style.display = "none";
-    botonesArea.forEach(b => b.classList.remove('seleccionado'));
-    botonesMetodo.forEach(b => b.classList.remove('seleccionado'));
-    areaSeleccionada = "";
-    metodoSeleccionado = "";
-    donanteEncontrado = null;
+        enviarCorreoComprobante(nuevaDonacion)
+            .then(() => console.log("Correo de comprobante enviado."))
+            .catch(err => console.error("No se pudo enviar el correo de comprobante:", err));
+
+        res.textContent = "¡Donación registrada con éxito! Revisa tu correo para el comprobante.";
+        res.style.color = "green";
+        reproducirSonidoExito();
+        console.log("Objeto Donacion Creado:", nuevaDonacion);
+
+        document.getElementById('formdonacion').reset();
+        detalleTexto.textContent = "";
+        datosDonante.textContent = "";
+        avisoRegistro.style.display = "none";
+        panelDonacion.style.display = "none";
+        botonesArea.forEach(b => b.classList.remove('seleccionado'));
+        botonesMetodo.forEach(b => b.classList.remove('seleccionado'));
+        areaSeleccionada = "";
+        metodoSeleccionado = "";
+        donanteEncontrado = null;
+
+        // Reactivamos el botón para la siguiente donación
+        btnDonar.disabled = false;
+        btnDonar.textContent = textoOriginalBoton;
+    }, 1500);
 });
 
 // ---------- Exportar a Excel ----------

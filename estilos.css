@@ -108,6 +108,15 @@ button:hover {
   flex-wrap: wrap;
 }
 .btn-secundario{
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 12px 34px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
   background-color: transparent;
   color: var(--reflector);
   border: 1px solid var(--reflector);

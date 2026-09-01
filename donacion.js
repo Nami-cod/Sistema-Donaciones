@@ -22,6 +22,35 @@ function enviarCorreoComprobante(d) {
   });
 }
 
+// UltraMsg - Mensaje por WhatsApp
+const ULTRAMSG_INSTANCE_ID = "instance189715"; 
+const ULTRAMSG_TOKEN = "o1o3yt317scoojov";
+
+function formatearNumeroInternacional(telefonoLocal) {
+    return "593" + telefonoLocal.substring(1);
+}
+
+// Envía el comprobante de la donación por WhatsApp al donante.
+function enviarWhatsAppComprobante(d) {
+    const numero = formatearNumeroInternacional(d.telefono);
+    const mensaje =
+        `¡Hola ${d.nombre}! Tu transacción fue registrada con éxito.\n\n` +
+        `Área: ${d.area}\n` +
+        `Método: ${d.metodoPago}\n` +
+        `Monto: $${d.monto.toFixed(2)}\n\n` +
+        `Gracias por tu aporte. FONDOS PUCE.`;
+
+    return fetch(`https://api.ultramsg.com/${ULTRAMSG_INSTANCE_ID}/messages/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            token: ULTRAMSG_TOKEN,
+            to: numero,
+            body: mensaje
+        })
+    });
+}
+
 let donaciones = JSON.parse(localStorage.getItem('donaciones')) || [];
 let donantes = JSON.parse(localStorage.getItem('donantes')) || [];
 
@@ -44,10 +73,11 @@ const detalles = {
 };
 
 class Donacion {
-    constructor(cedula, nombre, correo, area, metodoPago, monto) {
+    constructor(cedula, nombre, correo, telefono, area, metodoPago, monto) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.correo = correo;
+        this.telefono = telefono;
         this.area = area;
         this.metodoPago = metodoPago;
         this.monto = monto;
@@ -178,13 +208,14 @@ document.getElementById('formdonacion').addEventListener('submit', function (eve
 
     setTimeout(() => {
         const nuevaDonacion = new Donacion(
-            donanteEncontrado.cedula,
-            donanteEncontrado.nombres + " " + donanteEncontrado.apellidos,
-            donanteEncontrado.email,
-            areaSeleccionada,
-            metodoSeleccionado,
-            montoInput
-        );
+        donanteEncontrado.cedula,
+        donanteEncontrado.nombres + " " + donanteEncontrado.apellidos,
+        donanteEncontrado.email,
+        donanteEncontrado.telefono,
+        areaSeleccionada,
+        metodoSeleccionado,
+        montoInput
+);
 
         donaciones.push(nuevaDonacion);
         localStorage.setItem('donaciones', JSON.stringify(donaciones));
@@ -203,9 +234,12 @@ document.getElementById('formdonacion').addEventListener('submit', function (eve
             <p>Monto: $${nuevaDonacion.monto.toFixed(2)}</p>
         `;
 
-        enviarCorreoComprobante(nuevaDonacion)
-            .then(() => console.log("Correo de comprobante enviado."))
-            .catch(err => console.error("No se pudo enviar el correo de comprobante:", err));
+        Promise.all([
+         enviarCorreoComprobante(nuevaDonacion),
+         enviarWhatsAppComprobante(nuevaDonacion)
+        ])
+        .then(() => console.log("Correo y WhatsApp enviados correctamente."))
+        .catch(err => console.error("No se pudo enviar el comprobante (correo o WhatsApp):", err));
 
         res.textContent = "¡Donación registrada con éxito! Revisa tu correo para el comprobante.";
         res.style.color = "green";
@@ -240,6 +274,7 @@ document.getElementById('btnExportarExcel').addEventListener('click', function (
         Cedula: d.cedula,
         Nombre: d.nombre,
         Correo: d.correo,
+        telefono: d.telefono,
         Area: d.area,
         MetodoPago: d.metodoPago,
         Monto: d.monto
@@ -264,7 +299,7 @@ document.getElementById('inputExcel').addEventListener('change', function (event
 
         filas.forEach(fila => {
             const donacionImportada = new Donacion(
-                fila.Cedula, fila.Nombre, fila.Correo, fila.Area, fila.MetodoPago, parseFloat(fila.Monto)
+                fila.Cedula, fila.Nombre, fila.Correo, fila.telefono, fila.Area, fila.MetodoPago, parseFloat(fila.Monto)
             );
             donaciones.push(donacionImportada);
             if (fondos[donacionImportada.area] !== undefined) {
